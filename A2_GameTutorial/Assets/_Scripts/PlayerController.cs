@@ -19,8 +19,9 @@ public class PlayerController : MonoBehaviour
         //Setting rigid body components at start
         CharacterBody = this.GetComponent<Rigidbody2D>();
         CharacterTransform = this.transform;
-        tagGround = GameObject.Find(name + "tag_Ground").transform;
         //Setting up tag to see if player is on the ground
+        tagGround = GameObject.Find(name + "tag_Ground").transform;
+        
          
 
     }
@@ -48,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-     //Setting Jump function
+     //Setting Jump function when player is on the ground
      if(isGrounded)
             CharacterBody.velocity += jumpheight * Vector2.up;
     }
