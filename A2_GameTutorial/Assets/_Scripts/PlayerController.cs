@@ -20,10 +20,7 @@ public class PlayerController : MonoBehaviour
         CharacterBody = this.GetComponent<Rigidbody2D>();
         CharacterTransform = this.transform;
         //Setting up tag to see if player is on the ground
-        tagGround = GameObject.Find(name + "tag_Ground").transform;
-        
-         
-
+        tagGround = GameObject.Find(name + "tag_Ground").transform;   
     }
 
     // Update is called once per frame
@@ -35,8 +32,7 @@ public class PlayerController : MonoBehaviour
         //movement and jump Inputs
         Move(Input.GetAxisRaw("Horizontal"));
         if (Input.GetButtonDown("Jump"))
-            Jump();
-      
+            Jump();      
     }
 
     public void Move(float horizontalInput)
@@ -54,5 +50,39 @@ public class PlayerController : MonoBehaviour
             CharacterBody.velocity += jumpheight * Vector2.up;
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    // Setting enemies to be destroyed if player hits them
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Enemy Killed");
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.tag == "Spike")
+        {
+            Debug.Log("You have been spiked");
+            //Add Damage when setting up UI
+        }
 
+        if (collision.gameObject.tag == "Coin")
+        {
+            Debug.Log("Coin Collected");
+            Destroy(collision.gameObject);
+            //Add Score when setting up UI
+        }
+
+        if (collision.gameObject.tag == "Boulder")
+        {
+            Debug.Log("You Died");
+            Destroy(this.gameObject);
+            //Player will need to restart, death screen to be created in UI
+        }
+
+        if (collision.gameObject.tag == "PLayerEnter")
+        {
+            Debug.Log("Boulder Trap Active");
+            //Destroy(this.gameObject);
+        }
+    }
+    
 }
