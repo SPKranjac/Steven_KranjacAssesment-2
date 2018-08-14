@@ -9,6 +9,12 @@ public class PlayerController : MonoBehaviour
     public LayerMask playerMask;
     Transform CharacterTransform, tagGround;
     Rigidbody2D CharacterBody;
+    public int startingHealth = 100;
+    public int maxHealth = 100;
+    public int damage = 5;
+    public int healing = 5;
+    public int currentHealth;
+
 
     public bool isGrounded = false;
 
@@ -53,36 +59,50 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     // Setting enemies to be destroyed if player hits them
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "EnemySafe")
         {
-            Debug.Log("Enemy Killed");
+            Debug.Log(" Enemy Killed ");
             Destroy(collision.gameObject);
+
+        }
+            if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log(" You Died ");
+            Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == "Spike")
         {
-            Debug.Log("You have been spiked");
             //Add Damage when setting up UI
+            currentHealth -= damage;
+            //health.text = "Health:" + currentHealth.ToString();
+            Debug.Log(" You have been spiked ");
+            
+        }
+
+        if (collision.gameObject.tag == "Pit")
+        {
+            //Player will die when landing on Pit Spikes
+            Debug.Log(" You Died ");
+            Destroy(this.gameObject);
+            
         }
 
         if (collision.gameObject.tag == "Coin")
         {
-            Debug.Log("Coin Collected");
-            Destroy(collision.gameObject);
             //Add Score when setting up UI
+            Debug.Log(" Coin Collected ");
+            Destroy(collision.gameObject);
+            
         }
 
-        if (collision.gameObject.tag == "Boulder")
+        if (collision.gameObject.tag == "Health")
         {
-            Debug.Log("You Died");
-            Destroy(this.gameObject);
-            //Player will need to restart, death screen to be created in UI
+            //Add Health when setting up UI
+            Debug.Log(" Health Collected ");
+            Destroy(collision.gameObject);
+            
         }
 
-        if (collision.gameObject.tag == "PLayerEnter")
-        {
-            Debug.Log("Boulder Trap Active");
-            //Destroy(this.gameObject);
-        }
     }
     
 }

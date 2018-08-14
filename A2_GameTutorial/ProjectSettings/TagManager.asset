@@ -10,6 +10,10 @@ TagManager:
   - Boulder
   - Trap
   - Ground
+  - EnemySafe
+  - Pit
+  - Health
+  - Platform
   layers:
   - Default
   - TransparentFX
